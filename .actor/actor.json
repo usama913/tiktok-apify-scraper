@@ -5,6 +5,8 @@
   "description": "Extract videos from public TikTok profiles with views, likes, comments, shares, saves, music, hashtags and author stats. Filter by date. Pay only per video.",
   "version": "1.0",
   "buildTag": "latest",
+  "minMemoryMbytes": 1024,
+  "defaultMemoryMbytes": 2048,
   "input": "./input_schema.json",
   "dockerfile": "./Dockerfile",
   "output": "./output_schema.json",
