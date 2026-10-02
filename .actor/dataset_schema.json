@@ -1,0 +1,319 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Video ID",
+        "description": "TikTok video ID."
+      },
+      "text": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Text",
+        "description": "Video caption."
+      },
+      "textLanguage": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Language",
+        "description": "Caption language code."
+      },
+      "createTime": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "title": "Created (unix)",
+        "description": "Unix timestamp in seconds."
+      },
+      "createTimeISO": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Created",
+        "description": "Creation time in ISO 8601 (UTC)."
+      },
+      "isAd": {
+        "type": [
+          "boolean",
+          "null"
+        ],
+        "title": "Is ad",
+        "description": "Whether the video is marked as an ad."
+      },
+      "authorMeta": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "title": "Author",
+        "description": "Profile: id, name, profileUrl, nickName, verified, signature, bioLink, avatar, privateAccount, following, friends, fans, heart, video, digg."
+      },
+      "musicMeta": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "title": "Music",
+        "description": "musicName, musicAuthor, musicOriginal, musicAlbum, playUrl, coverMediumUrl, musicId."
+      },
+      "webVideoUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Video URL",
+        "description": "Public video URL."
+      },
+      "videoMeta": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "title": "Video",
+        "description": "height, width, duration (seconds, 0 for slideshows), coverUrl, originalCoverUrl, definition, format, subtitleLinks."
+      },
+      "diggCount": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "title": "Likes",
+        "description": "Like count."
+      },
+      "shareCount": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "title": "Shares",
+        "description": "Share count."
+      },
+      "playCount": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "title": "Plays",
+        "description": "Play count."
+      },
+      "collectCount": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "title": "Saves",
+        "description": "Save (bookmark) count."
+      },
+      "commentCount": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "title": "Comments",
+        "description": "Comment count."
+      },
+      "repostCount": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "title": "Reposts",
+        "description": "Repost count."
+      },
+      "mentions": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "title": "Mentions",
+        "description": "Mentioned usernames."
+      },
+      "detailedMentions": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "title": "Detailed mentions",
+        "description": "Mentioned users with id and profile URL."
+      },
+      "hashtags": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "title": "Hashtags",
+        "description": "Hashtags with id and name."
+      },
+      "isSlideshow": {
+        "type": [
+          "boolean",
+          "null"
+        ],
+        "title": "Slideshow",
+        "description": "Whether the post is a photo slideshow."
+      },
+      "slideshowImageLinks": {
+        "type": [
+          "array",
+          "null"
+        ],
+        "title": "Slideshow images",
+        "description": "Image URLs of a slideshow post."
+      },
+      "isPinned": {
+        "type": [
+          "boolean",
+          "null"
+        ],
+        "title": "Pinned",
+        "description": "Whether the video is pinned on the profile."
+      },
+      "isSponsored": {
+        "type": [
+          "boolean",
+          "null"
+        ],
+        "title": "Sponsored",
+        "description": "Whether the video is sponsored or promoted."
+      },
+      "input": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Input",
+        "description": "Profile as given in the input."
+      },
+      "fromProfileSection": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Profile section",
+        "description": "Profile section the video came from."
+      },
+      "status": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Status",
+        "description": "Set to \"failed\" for profiles that could not be scraped."
+      },
+      "note": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Note",
+        "description": "Failure reason."
+      },
+      "isProxyUsed": {
+        "type": [
+          "boolean",
+          "null"
+        ],
+        "title": "Proxy used",
+        "description": "Whether a proxy was used (failed records only)."
+      }
+    },
+    "additionalProperties": true
+  },
+  "views": {
+    "overview": {
+      "title": "Videos",
+      "transformation": {
+        "fields": [
+          "authorMeta.avatar",
+          "authorMeta.name",
+          "text",
+          "diggCount",
+          "shareCount",
+          "playCount",
+          "commentCount",
+          "collectCount",
+          "videoMeta.duration",
+          "musicMeta.musicName",
+          "musicMeta.musicAuthor",
+          "musicMeta.musicOriginal",
+          "createTimeISO",
+          "webVideoUrl",
+          "input",
+          "status",
+          "note"
+        ],
+        "flatten": [
+          "authorMeta",
+          "videoMeta",
+          "musicMeta"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "authorMeta.avatar": {
+            "label": "Avatar",
+            "format": "image"
+          },
+          "authorMeta.name": {
+            "label": "Author"
+          },
+          "diggCount": {
+            "label": "Likes",
+            "format": "number"
+          },
+          "shareCount": {
+            "label": "Shares",
+            "format": "number"
+          },
+          "playCount": {
+            "label": "Plays",
+            "format": "number"
+          },
+          "commentCount": {
+            "label": "Comments",
+            "format": "number"
+          },
+          "collectCount": {
+            "label": "Saves",
+            "format": "number"
+          },
+          "videoMeta.duration": {
+            "label": "Duration (s)",
+            "format": "number"
+          },
+          "musicMeta.musicName": {
+            "label": "Music"
+          },
+          "musicMeta.musicAuthor": {
+            "label": "Music author"
+          },
+          "musicMeta.musicOriginal": {
+            "label": "Original music",
+            "format": "boolean"
+          },
+          "createTimeISO": {
+            "label": "Created",
+            "format": "date"
+          },
+          "webVideoUrl": {
+            "label": "Video URL",
+            "format": "link"
+          }
+        }
+      }
+    }
+  }
+}

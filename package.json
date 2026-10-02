@@ -1,0 +1,26 @@
+{
+  "name": "tiktok-profile-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Apify Actor that extracts public TikTok profile videos with views, likes, comments, shares, saves, music and author information.",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "apify": "^3.4.0",
+    "crawlee": "^3.13.0",
+    "puppeteer": "^24.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "@apify/eslint-config": "^0.4.0",
+    "eslint": "^8.50.0"
+  },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "node --check src/main.js && node --check src/profileScraper.js && node --check src/transform.js && node --check src/utils.js"
+  },
+  "author": "Usama Anwar",
+  "license": "MIT"
+}

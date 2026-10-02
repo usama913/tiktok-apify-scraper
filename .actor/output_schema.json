@@ -1,0 +1,13 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "TikTok Profile Scraper output",
+  "description": "Scraped TikTok videos stored in the default dataset.",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "Scraped videos",
+      "description": "Video records from the run.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    }
+  }
+}

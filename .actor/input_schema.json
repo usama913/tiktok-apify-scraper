@@ -1,0 +1,76 @@
+{
+  "title": "TikTok Profile Scraper",
+  "description": "Scrape videos from one or more public TikTok profiles.",
+  "type": "object",
+  "schemaVersion": 1,
+  "required": [
+    "profiles"
+  ],
+  "properties": {
+    "profiles": {
+      "title": "Profiles",
+      "type": "array",
+      "description": "TikTok profile URLs or usernames, e.g. https://www.tiktok.com/@hyundaiuk, @hyundaiuk or hyundaiuk.",
+      "editor": "stringList",
+      "prefill": [
+        "https://www.tiktok.com/@hyundaiuk"
+      ],
+      "maxItems": 500
+    },
+    "resultsPerPage": {
+      "title": "Videos per profile",
+      "type": "integer",
+      "description": "Maximum number of latest videos to return for each profile.",
+      "editor": "number",
+      "default": 100,
+      "prefill": 100,
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "oldestPostDate": {
+      "title": "Oldest post date",
+      "type": "string",
+      "description": "Only return videos posted on or after this date. Absolute (2026-09-18) or relative (7 days, 2 weeks, 3 months). Pinned videos never stop the scrape.",
+      "editor": "datepicker",
+      "dateType": "absoluteOrRelative",
+      "nullable": true
+    },
+    "excludePinnedPosts": {
+      "title": "Exclude pinned posts",
+      "type": "boolean",
+      "description": "Skip videos pinned to the top of the profile.",
+      "default": false
+    },
+    "proxy": {
+      "title": "Proxy configuration",
+      "type": "object",
+      "description": "Proxy used to access TikTok. Apify Proxy is recommended. Switch to the RESIDENTIAL group if you see captcha or block errors.",
+      "editor": "proxy",
+      "default": {
+        "useApifyProxy": true
+      },
+      "prefill": {
+        "useApifyProxy": true
+      },
+      "sectionCaption": "Advanced settings"
+    },
+    "maxConcurrency": {
+      "title": "Concurrency",
+      "type": "integer",
+      "description": "Number of profiles processed in parallel. Each one runs a browser tab.",
+      "editor": "number",
+      "default": 2,
+      "minimum": 1,
+      "maximum": 10
+    },
+    "maxRequestRetries": {
+      "title": "Retries",
+      "type": "integer",
+      "description": "How many times a blocked or failed profile is retried with a new browser session and proxy IP.",
+      "editor": "number",
+      "default": 4,
+      "minimum": 0,
+      "maximum": 10
+    }
+  }
+}
