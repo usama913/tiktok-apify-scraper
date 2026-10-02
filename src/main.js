@@ -1,6 +1,7 @@
 import { Actor, log } from 'apify';
 import { PuppeteerCrawler, puppeteerUtils } from 'crawlee';
 import puppeteerExtra from 'puppeteer-extra';
+import { PuppeteerExtraPlugin } from 'puppeteer-extra-plugin';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { attachItemListCollector, PermanentError, ProfileScraper } from './profileScraper.js';
 import { parseOldestDate, parseUsername } from './utils.js';
@@ -27,6 +28,22 @@ const BLOCKED_URL_PATTERNS = [
     '/video/tos/', 'mime_type=video',
 ];
 
+/*
+ * The stealth user-agent evasion depends on "user-preferences", which pulls
+ * in puppeteer-extra-plugin-user-data-dir. That plugin keeps one profile
+ * directory for all browsers and deletes it when any browser closes, so a
+ * relaunched browser crashes with Chrome exit code 21 ("profile in use").
+ * A no-op plugin with the same name satisfies the dependency; Puppeteer
+ * then gives each browser its own temporary profile. Language is set via
+ * --lang and the accept-language header instead.
+ */
+class NoopUserPreferencesPlugin extends PuppeteerExtraPlugin {
+    get name() {
+        return 'user-preferences';
+    }
+}
+
+puppeteerExtra.use(new NoopUserPreferencesPlugin());
 puppeteerExtra.use(StealthPlugin());
 
 await Actor.init();

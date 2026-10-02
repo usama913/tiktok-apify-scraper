@@ -10,6 +10,8 @@ const PROFILE_NOT_FOUND_CODES = [10202, 10221, 10223];
 const FIRST_PAGE_TIMEOUT_MS = 20000;
 const NEXT_PAGE_TIMEOUT_MS = 12000;
 const MAX_EMPTY_SCROLLS = 3;
+const MAX_RELOADS = 2;
+const EMPTY_RESPONSE_GRACE_MS = 4000;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -147,16 +149,7 @@ export class ProfileScraper {
         let emptyScrolls = 0;
         let done = false;
 
-        await this._waitForPages(1, FIRST_PAGE_TIMEOUT_MS);
-
-        if (this.collected.length === 0 || this.collected.every((page) => page.empty)) {
-
-            if (await this._isCaptchaVisible()) {
-                throw new Error('TikTok captcha shown.');
-            }
-
-            throw new Error('Video list did not load.');
-        }
+        await this._waitForFirstVideoList();
 
         while (!done) {
 
@@ -232,6 +225,51 @@ export class ProfileScraper {
         }
 
         return results;
+    }
+
+    /*
+     * TikTok sometimes answers the first video list request with an empty
+     * body (soft block). Reloading in the same session often succeeds;
+     * if it doesn't, the request is retried with a new session/IP.
+     */
+    async _waitForFirstVideoList() {
+
+        const hasVideoList = () => this.collected.some((page) => !page.empty);
+
+        for (let attempt = 0; attempt <= MAX_RELOADS; attempt++) {
+
+            if (attempt > 0) {
+                this.log.info(`Empty video list from TikTok, reloading page (${attempt}/${MAX_RELOADS}).`);
+                await this.page.reload({ waitUntil: 'domcontentloaded', timeout: 60000 });
+            }
+
+            const responsesBefore = this.collected.length;
+            let deadline = Date.now() + FIRST_PAGE_TIMEOUT_MS;
+
+            while (!hasVideoList() && Date.now() < deadline) {
+
+                // Got an empty answer: give it a few seconds, then reload.
+                if (this.collected.length > responsesBefore) {
+                    deadline = Math.min(deadline, Date.now() + EMPTY_RESPONSE_GRACE_MS);
+                }
+
+                await sleep(250);
+            }
+
+            if (hasVideoList()) {
+                return;
+            }
+        }
+
+        if (await this._isCaptchaVisible()) {
+            throw new Error('TikTok captcha shown.');
+        }
+
+        throw new Error(
+            this.collected.length > 0
+                ? 'TikTok returned an empty video list (blocked). Try the RESIDENTIAL proxy group.'
+                : 'Video list did not load.',
+        );
     }
 
     async _waitForPages(count, timeoutMs) {
