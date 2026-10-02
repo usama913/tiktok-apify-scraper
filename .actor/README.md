@@ -11,9 +11,10 @@ This Actor uses **Pay Per Event (PPE)** monetization.
 | Event | Price |
 | --- | --- |
 | `video-scraped`: one video saved to the dataset | **$0.0005** |
+| `apify-actor-start`: run start (per GB of memory) | $0.00005 |
 
 - **1,000 videos = $0.50**
-- You pay only for videos saved to your dataset.
+- Apart from a tiny start fee per run, you pay only for videos saved to your dataset.
 - Failed profiles (not found, private, blocked) are **not charged**.
 - Profiles with no videos matching your filters are **not charged**.
 - Set a **maximum cost per run** in the Apify Console. The Actor saves only as many videos as your limit allows, then stops.
