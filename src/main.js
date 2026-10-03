@@ -67,8 +67,8 @@ const rawProfiles = (Array.isArray(input.profiles) ? input.profiles : [])
 const maxItems = Math.max(1, Number(input.resultsPerPage ?? 100));
 const oldestDate = parseOldestDate(input.oldestPostDate);
 const excludePinnedPosts = input.excludePinnedPosts === true;
-const maxConcurrency = Math.max(1, Number(input.maxConcurrency ?? 2));
-const maxRequestRetries = Math.max(0, Number(input.maxRequestRetries ?? 4));
+const maxConcurrency = Math.max(1, Number(input.maxConcurrency ?? 3));
+const maxRequestRetries = Math.max(0, Number(input.maxRequestRetries ?? 2));
 
 if (input.oldestPostDate && !oldestDate) {
     log.warning(`Ignoring invalid "oldestPostDate" value: ${input.oldestPostDate}`);
