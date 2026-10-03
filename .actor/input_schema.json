@@ -59,7 +59,7 @@
       "type": "integer",
       "description": "Number of profiles processed in parallel. Each one runs a browser tab.",
       "editor": "number",
-      "default": 2,
+      "default": 3,
       "minimum": 1,
       "maximum": 10
     },
@@ -68,9 +68,9 @@
       "type": "integer",
       "description": "How many times a blocked or failed profile is retried with a new browser session and proxy IP.",
       "editor": "number",
-      "default": 4,
+      "default": 2,
       "minimum": 0,
-      "maximum": 10
+      "maximum": 5
     }
   }
 }
