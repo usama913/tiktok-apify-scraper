@@ -7,10 +7,10 @@ const ITEM_LIST_PATH = '/api/post/item_list';
  */
 const PROFILE_NOT_FOUND_CODES = [10202, 10221, 10223];
 
-const FIRST_PAGE_TIMEOUT_MS = 20000;
+const FIRST_PAGE_TIMEOUT_MS = 15000;
 const NEXT_PAGE_TIMEOUT_MS = 12000;
-const MAX_EMPTY_SCROLLS = 3;
-const MAX_RELOADS = 2;
+const MAX_EMPTY_SCROLLS = 2;
+const MAX_RELOADS = 1;
 const EMPTY_RESPONSE_GRACE_MS = 4000;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
